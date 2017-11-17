@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jfinal模板</title>
+</head>
+<body>
+	//必须先调用controller跳到该页面:#(template)<br/>
+	#if('abc'==com.lwg.examples.utils.CommonUtils::commGet)
+		后台常量:#(com.lwg.examples.utils.CommonUtils::commGet)
+	#elseif(1==1)
+		11111111
+	#else
+		22222
+	#end
+	<br/>
+	#(com.lwg.examples.utils.CommonUtils::commSet)
+	<br/>
+	调用方法：
+	#(com.lwg.examples.utils.CommonUtils::getTemple('呵呵呵呵'))
+	<br/>三元表达式：
+	#(com.lwg.examples.utils.CommonUtils::commSet=='111'?'aaaa':'2222')
+
+	<br>赋值：k3没有,为空如下：
+	#set(map={k1:123,"k2":"xxx",k3:object})
+	#(map.k1)
+	#(map.k3)
+	#(map["k1"])
+	#(map["k2"])----
+	#(map.k4)
+	<br/>
+	<br>迭代1:
+	#for(x:[1..9])
+		#(x)
+	#end
+	<br>迭代2:
+	#for(x:map)
+		#(x.key)---#(x.value);
+	#end
+	<br>迭代3:
+	#for(x:map)
+	<br/>
+		大小：#(for.size)---
+		0开始下标：#(for.index)---1开始计数值：#(for.count)---是否第一次：#(for.first)---是否最后一次：#(for.last)---
+		是否奇数：#(for.odd)---是否偶数：#(for.even)---上层指令状态：#(for.outer);
+		#for(i=0;i<10;i++)
+			#(for.outer.index)<!-- 获取外层for.outer -->
+		#end
+	#end
+	<br>迭代4:#for(li:list)
+			 #else
+			 	list没有数据哦
+			 #end
+	<br/><br/>
+	#[[#setLocal和#set的区别是，#setLocal的变量只能在本页面]]#<br/>
+	赋值：#set(x=123)
+	#setLocal(xx=134)
+	#set(a=1,b=2,c=a+b)
+	#(x),#(c),#(xx)
+	
+	<br/><br/>
+	#[[#include]]#
+	#include("test/NewFile.html")
+	
+	<br/><br/>
+	#[[#define function() 使用：下面内容来自其它页面]]#
+	#@content()
+	#@contentParam('参数1','参数2')
+	
+	<br/>java扩展
+	#(getTemple('bbbb')) <!-- 需要配置 configEngine中的me.addSharedMethod(new CommonUtils()) 就不需要加包路劲 -->
+	<br/>#(rootPath) <br/>#(comm.getTemple('水水水水'))
+</body>
+</html>
